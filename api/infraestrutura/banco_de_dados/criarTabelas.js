@@ -1,5 +1,13 @@
-const ModeloTabela = require("../../modelos/Fornecedores.model");
+const modelos = [
+  require("../../modelos/Fornecedores.model"),
+  require("../../modelos/Produtos.model"),
+];
 
-ModeloTabela.sync()
-  .then(() => console.log("Tabela criada com sucesso"))
-  .catch(console.log);
+async function criarTabelas() {
+  for (let contador = 0; contador < modelos.length; contador++) {
+    const modelo = modelos[contador];
+    await modelo.sync();
+  }
+}
+
+criarTabelas();

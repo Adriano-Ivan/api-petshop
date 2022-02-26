@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const roteadorFornecedores = require("./../api/rotas/fornecedores/index");
+const roteadorProdutos = require("./../api/rotas/produtos/index");
 const NaoEncontrado = require("./../api/erros/NaoEncontrado");
 const CampoInvalido = require("./../api/erros/CampoInvalido");
 const DadosNaoFornecidos = require("../api/erros/DadosNaoFornecidos");
@@ -22,6 +23,7 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/fornecedores", roteadorFornecedores);
+
 app.use((erro, req, res, proximo) => {
   let status = 500;
   if (erro instanceof NaoEncontrado) {
