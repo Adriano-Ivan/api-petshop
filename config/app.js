@@ -1,7 +1,8 @@
 const express = require("express");
 const app = express();
+const cors = require("cors");
 const roteadorFornecedores = require("./../api/rotas/fornecedores/index");
-const roteadorProdutos = require("./../api/rotas/produtos/index");
+const roteadorV2 = require("./../api/rotas/fornecedores/rotas.v2");
 const NaoEncontrado = require("./../api/erros/NaoEncontrado");
 const CampoInvalido = require("./../api/erros/CampoInvalido");
 const DadosNaoFornecidos = require("../api/erros/DadosNaoFornecidos");
@@ -10,6 +11,22 @@ const { formatosAceitos } = require("./../api/serializador/Serializador");
 const { SerializadorErro } = require("./../api/serializador/Serializador");
 
 app.use(express.json());
+// app.use((req, res, next) => {
+//   res.set("Access-Control-Allow-Origin", "https://wireframepro.mockflow.com/");
+//   next();
+// });
+app.get("/", (req, res) => {
+  res.send("ok");
+});
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+  })
+);
+app.use((req, res, next) => {
+  res.set("X-Powered-By", "Cachorrito Petshop");
+  next();
+});
 app.use((req, res, next) => {
   const formatoRequisitado = req.header("Accept");
 
@@ -23,6 +40,8 @@ app.use((req, res, next) => {
 });
 
 app.use("/api/fornecedores", roteadorFornecedores);
+
+app.use("/api/v2/fornecedores", roteadorV2);
 
 app.use((erro, req, res, proximo) => {
   let status = 500;

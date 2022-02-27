@@ -31,7 +31,7 @@ const opcoes = {
   timestamps: true,
   createdAt: "dataCriacao",
   updatedAt: "dataAtualizacao",
-  version: "versão",
+  version: "versao",
 };
 
 module.exports = instancia.define("produto", colunas, opcoes);
